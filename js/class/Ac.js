@@ -23,19 +23,20 @@ class Ac {
     }
 
     getAc() {
-        return this.data;
+        return this.#data;
     }
 
     getAcById(id) {
-        return this.data[id];
+        return this.#data[id];
     }
 
     getAcByIdList(list) {
         let rep = [];
         list.forEach((id) => {
-            rep.push(this.data[id]);
+            rep.push(this.#data[id]);
         });
         return rep;
+
     }
 
 

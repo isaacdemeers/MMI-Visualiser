@@ -59,6 +59,30 @@ M.options = {
         },
 
 
+    },
+
+    it2: {
+        option: {
+            series: {
+                type: 'sunburst',
+
+                data: [],
+                radius: [0, '90%'],
+                label: {
+                    rotate: 'radial'
+                }
+            }
+        },
+
+        template: {
+            name: '',
+            children: []
+        },
+
+        child: {
+            name: '',
+            value: 10
+        }
     }
 }
 
@@ -76,12 +100,8 @@ M.init = async function () {
 
 M.renderIT1 = function () {
     let option = M.options.it1.option;
-
-
     let sae = lib['sae'].getSae();
     let competences = lib['competences'].getCompetences();
-
-    console.log(sae);
 
     for (let key in sae) {
         option.yAxis.data.push(sae[key].code);
@@ -93,16 +113,72 @@ M.renderIT1 = function () {
         template.name = competences[ckey].name;
 
         for (let key in sae) {
-            if (sae[key].competences.includes(competences[ckey].id)) {
-                let acs = lib['competences'].getAcsByCompetenceId(competences[ckey].id);
-                template.data.push(acs.length);
+            let acList = [];
+
+            for (let ac of sae[key].ac) {
+                if (lib['competences'].getAcsByCompetenceId(competences[ckey].id).includes(ac)) {
+                    acList.push(ac);
+                }
             }
-            else { template.data.push(''); }
+            if (acList.length > 0) {
+                template.data.push(acList.length);
+            }
+            else {
+                template.data.push('');
+            }
+
         }
+
+
         option.series.push(template);
     }
+    console.log(option)
     return option;
 }
+
+M.renderIT2 = function (semestre) {
+    let option = JSON.parse(JSON.stringify(M.options.it2.option));
+    let ressources = lib['ressources'].getRessourcesBySemestre(semestre);
+    console.log(ressources)
+    let competences = lib['competences'].getCompetences();
+
+    let acs = [];
+    ressources.forEach((ressource) => {
+        acs.push(ressource.ac);
+    });
+    acs = acs.flat();
+
+    console.log(acs)
+
+    for (let key in competences) {
+        let template = JSON.parse(JSON.stringify(M.options.it2.template));
+
+        template.name = competences[key].name;
+
+        let cAcs = lib['competences'].getAcsByCompetenceId(competences[key].id);
+        let acList = lib['ac'].getAcByIdList(acs);
+        console.log(acList)
+
+        acList.forEach((ac) => {
+            if (cAcs.includes(ac.id)) {
+
+                let child = JSON.parse(JSON.stringify(M.options.it2.child));
+                child.name = lib['ac'].getAcById(ac.id).code;
+                template.children.push(child);
+            }
+
+        });
+
+        option.series.data.push(template);
+
+    }
+    console.log(option)
+
+    return option;
+
+}
+
+
 
 
 

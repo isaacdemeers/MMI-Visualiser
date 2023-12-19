@@ -23,17 +23,18 @@ class Ressources {
             temp['id'] = element.id;
 
             element.apcRessourceCompetences.forEach((competence) => {
-                competences.push(competence.id);
+                competences.push(competence.competence.id);
             });
 
             temp['competences'] = competences;
 
             element.apcRessourceApprentissageCritiques.forEach((ac) => {
-                acs.push(ac.id);
+                acs.push(ac.apprentissageCritique.id);
             });
 
             temp['ac'] = acs;
             temp['description'] = element.description;
+            temp['semestre'] = element.semestre.libelle;
 
             this.#data[element.id] = temp;
 
@@ -74,6 +75,17 @@ class Ressources {
         }
         return rep;
     }
+
+    getRessourcesBySemestre(semestre) {
+        let rep = [];
+        for (let key in this.#data) {
+            if (this.#data[key].semestre == semestre) {
+                rep.push(this.#data[key]);
+            }
+        }
+        return rep;
+    }
+
 
 }
 
