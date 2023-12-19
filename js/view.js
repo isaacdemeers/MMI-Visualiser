@@ -90,4 +90,18 @@ V.renderSelectIT2 = function (ressources, sae) {
     document.getElementById('resultit2').innerHTML = html;
 }
 
+V.renderSelectIT3 = function (sae) {
+    let html = ''
+    for (let key in sae) {
+        let option = document.createElement('option');
+        option.value = sae[key].id;
+        option.innerHTML = sae[key].code + ' - ' + sae[key].name;
+        html += option.outerHTML;
+    }
+
+    document.getElementById('saeit3').innerHTML = html;
+
+
+}
+
 export { V }

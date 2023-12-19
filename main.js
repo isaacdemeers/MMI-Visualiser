@@ -6,6 +6,7 @@ import { V } from './js/view.js';
 await M.init();
 let semestre = 'S1';
 V.renderSelectIT2(M.lib['ressources'].getRessourcesBySemestre(semestre), M.lib['sae'].getSaeBySemestre(semestre));
+V.renderSelectIT3(M.lib['sae'].getSae());
 
 
 let option = M.renderIT1();
@@ -16,6 +17,9 @@ let it21 = V.createChart('it21', option);
 
 option = M.renderIT22(654);
 let it22 = V.createChart('it22', option);
+
+option = M.renderIT3(283);
+let it3 = V.createChart('it3', option);
 
 
 
@@ -36,6 +40,12 @@ document.body.addEventListener('change', (e) => {
   if (e.target.id == 'resultit2') {
     let option = M.renderIT22(e.target.value);
     it22.setOption(option);
+
+  }
+
+  if (e.target.id == 'saeit3') {
+    let option = M.renderIT3(e.target.value);
+    it3.setOption(option);
 
   }
 })

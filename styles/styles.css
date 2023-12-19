@@ -28,6 +28,15 @@
 
 }
 
+h1 {
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    margin-bottom: 1rem;
+
+}
+
 .element {
 
     background-color: #21272d;
@@ -38,7 +47,8 @@
 
     width: fit-content;
     width: 100%;
-    height: 100vh;
+    height: fit-content;
+
 
     box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.48);
 
@@ -46,5 +56,5 @@
 
 .chart {
     width: 100%;
-    height: 100%;
+    height: 100vh;
 }

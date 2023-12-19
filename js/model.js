@@ -84,6 +84,111 @@ M.options = {
             name: '',
             value: 10
         }
+    },
+
+    it3: {
+        option: {
+            tooltip: {
+                trigger: 'item',
+                triggerOn: 'mousemove'
+            },
+            series: [
+                {
+                    type: 'tree',
+                    data: [],
+                    top: '1%',
+                    left: '7%',
+                    bottom: '1%',
+                    right: '20%',
+                    symbolSize: 7,
+                    label: {
+                        position: 'left',
+                        verticalAlign: 'middle',
+                        align: 'right',
+                        fontSize: 9
+                    },
+                    leaves: {
+                        label: {
+                            position: 'right',
+                            verticalAlign: 'middle',
+                            align: 'left'
+                        }
+                    },
+                    emphasis: {
+                        focus: 'descendant'
+                    },
+                    expandAndCollapse: true,
+                    animationDuration: 550,
+                    animationDurationUpdate: 750
+                }
+            ]
+        },
+
+        template: {
+            name: '',
+            children: []
+        },
+
+    },
+
+    it4: {
+        option: {
+            title: {
+                text: 'Les Miserables',
+                subtext: 'Circular layout',
+                top: 'bottom',
+                left: 'right'
+            },
+            tooltip: {},
+            legend: [
+                {
+                    data: [].map(function (a) {
+                        return a.name;
+                    })
+                }
+            ],
+            animationDurationUpdate: 1500,
+            animationEasingUpdate: 'quinticInOut',
+            series: [
+                {
+                    name: '',
+                    type: 'graph',
+                    layout: 'circular',
+                    circular: {
+                        rotateLabel: true
+                    },
+                    data: [],
+                    links: [],
+                    categories: [],
+                    roam: true,
+                    label: {
+                        position: 'right',
+                        formatter: '{b}'
+                    },
+                    lineStyle: {
+                        color: 'source',
+                        curveness: 0.3
+                    }
+                }
+            ]
+        },
+
+        categories: {
+            "name": ""
+        },
+
+        links: {
+            "source": "",
+            "target": ""
+        },
+
+        nodes: {
+            "id": "",
+            "name": "",
+            "symbolSize": 19.12381,
+            "value": "",
+            "category": 0
+        },
     }
 }
 
@@ -96,11 +201,6 @@ M.init = async function () {
     }
     console.log(M.lib)
 }
-
-
-
-
-
 
 
 M.renderIT1 = function () {
@@ -219,7 +319,48 @@ M.renderIT22 = function (id) {
 }
 
 
+M.renderIT3 = function (saeId) {
+    let option = JSON.parse(JSON.stringify(M.options.it3.option));
+    let sae = M.lib['sae'].getSaeById(saeId);
 
+    let saeTpl = JSON.parse(JSON.stringify(M.options.it3.template));
+    saeTpl.name = sae.code;
+
+    sae.competences.forEach((competence) => {
+        competence = M.lib['competences'].getCompetencesById(competence);
+        let acs = M.lib['competences'].getAcsByCompetenceId(competence.id);
+
+        let competenceTpl = JSON.parse(JSON.stringify(M.options.it3.template));
+        competenceTpl.name = competence.name;
+
+
+        acs.forEach((ac) => {
+            ac = M.lib['ac'].getAcById(ac);
+            let ressources = M.lib['ressources'].getRessourcesByAcId(ac.id);
+
+            let acTpl = JSON.parse(JSON.stringify(M.options.it3.template));
+            acTpl.name = ac.code;
+
+            ressources.forEach((ressource) => {
+                let ressourceTpl = JSON.parse(JSON.stringify(M.options.it3.template));
+                ressourceTpl.name = ressource.code + ' — ' + ressource.name;
+
+                acTpl.children.push(ressourceTpl);
+
+            })
+
+            competenceTpl.children.push(acTpl);
+
+        })
+
+        saeTpl.children.push(competenceTpl);
+    })
+
+    option.series[0].data.push(saeTpl);
+
+    return option;
+
+}
 
 
 
@@ -227,3 +368,6 @@ M.renderIT22 = function (id) {
 
 
 export { M }
+
+
+

@@ -64,6 +64,16 @@ class Ressources {
         return rep;
     }
 
+    getRessourcesByAcId(id) {
+        let rep = [];
+        for (let key in this.#data) {
+            if (this.#data[key].ac.includes(id)) {
+                rep.push(this.#data[key]);
+            }
+        }
+        return rep;
+    }
+
     getRessourcesByAcIdList(list) {
         let rep = [];
         for (let key in this.#data) {
