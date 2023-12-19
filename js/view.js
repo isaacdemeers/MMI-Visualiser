@@ -65,4 +65,29 @@ V.renderSelectIT2 = function (options) {
     return select;
 }
 
+V.renderSelectIT2 = function (ressources, sae) {
+
+    let html = ''
+    html += `<option disabled>RESSOURCES  ——————</option>`;
+    for (let key in ressources) {
+        let option = document.createElement('option');
+        option.value = ressources[key].id;
+        option.innerHTML = ressources[key].code + ' - ' + ressources[key].name;
+        html += option.outerHTML;
+    }
+
+    html += `<option disabled>SAE  ——————</option>`;
+
+
+
+    for (let key in sae) {
+        let option = document.createElement('option');
+        option.value = sae[key].id;
+        option.innerHTML = sae[key].code + ' - ' + sae[key].name;
+        html += option.outerHTML;
+    }
+
+    document.getElementById('resultit2').innerHTML = html;
+}
+
 export { V }
