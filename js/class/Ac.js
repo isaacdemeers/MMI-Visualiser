@@ -1,7 +1,9 @@
 
 class Ac {
+    #data;
+
     constructor() {
-        this.data = {};
+        this.#data = {};
 
     }
 
@@ -14,11 +16,28 @@ class Ac {
         rep.forEach((element) => {
             element['apcNiveaux'].forEach((apcNiveau) => {
                 apcNiveau['apcApprentissageCritiques'].forEach((apcApprentissageCritique) => {
-                    this.data[apcApprentissageCritique.id] = apcApprentissageCritique;
+                    this.#data[apcApprentissageCritique.id] = apcApprentissageCritique;
                 });
             });
         });
     }
+
+    getAc() {
+        return this.data;
+    }
+
+    getAcById(id) {
+        return this.data[id];
+    }
+
+    getAcByIdList(list) {
+        let rep = [];
+        list.forEach((id) => {
+            rep.push(this.data[id]);
+        });
+        return rep;
+    }
+
 
 }
 

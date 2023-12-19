@@ -37,7 +37,13 @@
 
     width: fit-content;
     width: 100%;
+    height: 100vh;
 
     box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.48);
 
+}
+
+#it1 {
+    width: 100%;
+    height: 100%;
 }
