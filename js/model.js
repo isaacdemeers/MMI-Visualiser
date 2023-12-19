@@ -66,6 +66,7 @@ M.options = {
             series: {
                 type: 'sunburst',
 
+
                 data: [],
                 radius: [0, '90%'],
                 label: {
@@ -93,8 +94,37 @@ M.init = async function () {
     for (let key in lib) {
         await lib[key].setup();
     }
+    M.renderSelectIT2('S1');
     console.log(lib)
 }
+
+
+M.renderSelectIT2 = function (semestre) {
+    let ressources = lib['ressources'].getRessourcesBySemestre(semestre)
+    let sae = lib['sae'].getSaeBySemestre(semestre);
+    let html = ''
+    html += `<option disabled>RESSOURCES  ——————</option>`;
+    for (let key in ressources) {
+        let option = document.createElement('option');
+        option.value = ressources[key].id;
+        option.innerHTML = ressources[key].code + ' - ' + ressources[key].name;
+        html += option.outerHTML;
+    }
+
+    html += `<option disabled>SAE  ——————</option>`;
+
+
+
+    for (let key in sae) {
+        let option = document.createElement('option');
+        option.value = sae[key].id;
+        option.innerHTML = sae[key].code + ' - ' + sae[key].name;
+        html += option.outerHTML;
+    }
+
+    document.getElementById('resultit2').innerHTML = html;
+}
+
 
 
 
@@ -132,14 +162,12 @@ M.renderIT1 = function () {
 
         option.series.push(template);
     }
-    console.log(option)
     return option;
 }
 
 M.renderIT2 = function (semestre) {
     let option = JSON.parse(JSON.stringify(M.options.it2.option));
     let ressources = lib['ressources'].getRessourcesBySemestre(semestre);
-    console.log(ressources)
     let competences = lib['competences'].getCompetences();
 
     let acs = [];
@@ -148,7 +176,6 @@ M.renderIT2 = function (semestre) {
     });
     acs = acs.flat();
 
-    console.log(acs)
 
     for (let key in competences) {
         let template = JSON.parse(JSON.stringify(M.options.it2.template));
@@ -157,7 +184,6 @@ M.renderIT2 = function (semestre) {
 
         let cAcs = lib['competences'].getAcsByCompetenceId(competences[key].id);
         let acList = lib['ac'].getAcByIdList(acs);
-        console.log(acList)
 
         acList.forEach((ac) => {
             if (cAcs.includes(ac.id)) {
@@ -172,11 +198,52 @@ M.renderIT2 = function (semestre) {
         option.series.data.push(template);
 
     }
-    console.log(option)
 
     return option;
 
 }
+
+M.renderIT3 = function (id) {
+
+    let option = JSON.parse(JSON.stringify(M.options.it2.option));
+    let data = lib['sae'].getSaeById(id);
+    let competences = lib['competences'].getCompetences();
+
+
+    if (data == undefined) {
+        data = lib['ressources'].getRessourcesById(id);
+    }
+
+    let acs = data.ac;
+    let acList = lib['ac'].getAcByIdList(acs);
+
+    for (let key in competences) {
+        let template = JSON.parse(JSON.stringify(M.options.it2.template));
+
+        template.name = competences[key].name;
+
+        let cAcs = lib['competences'].getAcsByCompetenceId(competences[key].id);
+        let acList = lib['ac'].getAcByIdList(acs);
+
+        acList.forEach((ac) => {
+            if (cAcs.includes(ac.id)) {
+
+                let child = JSON.parse(JSON.stringify(M.options.it2.child));
+                child.name = lib['ac'].getAcById(ac.id).code;
+                template.children.push(child);
+            }
+
+        });
+
+        option.series.data.push(template);
+
+    }
+
+    return option;
+
+}
+
+
 
 
 

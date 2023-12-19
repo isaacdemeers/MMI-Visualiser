@@ -23,6 +23,7 @@
 
     padding: 1rem;
     gap: 2rem;
+    flex-direction: column-reverse;
 
 
 }
@@ -43,7 +44,9 @@
 
 }
 
-#it1 {
+#it1,
+#it2,
+#it3 {
     width: 100%;
     height: 100%;
 }

@@ -35,6 +35,7 @@ class Ressources {
             temp['ac'] = acs;
             temp['description'] = element.description;
             temp['semestre'] = element.semestre.libelle;
+            temp['code'] = element.codeMatiere;
 
             this.#data[element.id] = temp;
 

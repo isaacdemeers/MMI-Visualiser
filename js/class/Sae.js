@@ -88,6 +88,16 @@ class Sae {
         return rep;
     }
 
+    getSaeBySemestre(semestre) {
+        let rep = [];
+        for (let key in this.#data) {
+            if (this.#data[key].semestre === semestre) {
+                rep.push(this.#data[key]);
+            }
+        }
+        return rep;
+    }
+
 
 }
 
