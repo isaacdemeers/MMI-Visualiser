@@ -185,7 +185,7 @@ M.options = {
         nodes: {
             "id": "",
             "name": "",
-            "symbolSize": 19.12381,
+            "symbolSize": 0,
             "value": "",
             "category": 0
         },
@@ -360,6 +360,58 @@ M.renderIT3 = function (saeId) {
 
     return option;
 
+}
+
+// Visualiser de manière globale et par semestre, l’ensemble des “liens” ou “dépendances” qui relient
+// compétences, apprentissages critiques, ressources et SAE
+
+M.createCategories = function () {
+    let data = {
+        competences: {
+            name: 'Compétences'
+        },
+        sae: {
+            name: 'SAE'
+        },
+        ac: {
+            name: 'Apprentissages critiques'
+        },
+        ressources: {
+            name: 'Ressources'
+        }
+    }
+    let categories = [];
+    for (let key in data) {
+        let category = JSON.parse(JSON.stringify(M.options.it4.categories));
+        category.name = data[key].name;
+        categories.push(category);
+    }
+    return categories;
+}
+
+M.createLink = function (source, targets) {
+    let links = [];
+    targets.forEach((target) => {
+        let link = JSON.parse(JSON.stringify(M.options.it4.links));
+        link.source = source;
+        link.target = target;
+        links.push(link);
+    })
+    return links;
+}
+
+M.createNode = function (id, name, category) {
+    let node = JSON.parse(JSON.stringify(M.options.it4.nodes));
+    node.id = id;
+    node.name = name;
+    node.symbolSize = 5 * (category + 1);
+    node.category = category;
+    return node;
+}
+
+M.renderIT4 = function (semestre) {
+    let categories = M.createCategories();
+    let sae = M.lib['sae'].getSaeBySemestre(semestre);
 }
 
 

@@ -8,6 +8,8 @@ let semestre = 'S1';
 V.renderSelectIT2(M.lib['ressources'].getRessourcesBySemestre(semestre), M.lib['sae'].getSaeBySemestre(semestre));
 V.renderSelectIT3(M.lib['sae'].getSae());
 
+console.log(M.createCategories());
+
 
 let option = M.renderIT1();
 let it1 = V.createChart('it1', option);
@@ -20,6 +22,9 @@ let it22 = V.createChart('it22', option);
 
 option = M.renderIT3(283);
 let it3 = V.createChart('it3', option);
+
+option = M.renderIT4('S1');
+let it4 = V.createChart('it4', option);
 
 
 
@@ -46,6 +51,12 @@ document.body.addEventListener('change', (e) => {
   if (e.target.id == 'saeit3') {
     let option = M.renderIT3(e.target.value);
     it3.setOption(option);
+
+  }
+
+  if (e.target.id == 'semestreit4') {
+    let option = M.renderIT4(e.target.value);
+    it4.setOption(option);
 
   }
 })
