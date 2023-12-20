@@ -8,7 +8,6 @@ let semestre = 'S1';
 V.renderSelectIT2(M.lib['ressources'].getRessourcesBySemestre(semestre), M.lib['sae'].getSaeBySemestre(semestre));
 V.renderSelectIT3(M.lib['sae'].getSae());
 
-console.log(M.createCategories());
 
 
 let option = M.renderIT1();

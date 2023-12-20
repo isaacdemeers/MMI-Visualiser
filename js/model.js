@@ -133,25 +133,17 @@ M.options = {
 
     it4: {
         option: {
-            title: {
-                text: 'Les Miserables',
-                subtext: 'Circular layout',
-                top: 'bottom',
-                left: 'right'
-            },
-            tooltip: {},
+
             legend: [
                 {
-                    data: [].map(function (a) {
-                        return a.name;
-                    })
+                    data: [],
                 }
             ],
             animationDurationUpdate: 1500,
             animationEasingUpdate: 'quinticInOut',
             series: [
                 {
-                    name: '',
+                    name: 'texw',
                     type: 'graph',
                     layout: 'circular',
                     circular: {
@@ -160,6 +152,13 @@ M.options = {
                     data: [],
                     links: [],
                     categories: [],
+                    emphasis: {
+                        focus: 'adjacency',
+                        label: {
+                            position: 'right',
+                            show: true
+                        }
+                    },
                     roam: true,
                     label: {
                         position: 'right',
@@ -186,7 +185,9 @@ M.options = {
             "id": "",
             "name": "",
             "symbolSize": 0,
-            "value": "",
+            "value": 4,
+            "x": 336.49738,
+            "y": -269.55914,
             "category": 0
         },
     }
@@ -393,25 +394,94 @@ M.createLink = function (source, targets) {
     let links = [];
     targets.forEach((target) => {
         let link = JSON.parse(JSON.stringify(M.options.it4.links));
-        link.source = source;
-        link.target = target;
+        link.source = `${source}`;
+        link.target = `${target}`;
         links.push(link);
     })
     return links;
 }
 
 M.createNode = function (id, name, category) {
+
     let node = JSON.parse(JSON.stringify(M.options.it4.nodes));
-    node.id = id;
-    node.name = name;
-    node.symbolSize = 5 * (category + 1);
+    node.id = `${id}`;
+    node.name = `${name}`;
+    node.symbolSize = 8 * (4 - category);
     node.category = category;
     return node;
 }
 
+M.filterNodes = function (nodes) {
+    let rep = [];
+    nodes.forEach((node) => {
+        if (!rep.some(r => r.id == node.id)) {
+            rep.push(node);
+        }
+    })
+    return rep;
+}
+
 M.renderIT4 = function (semestre) {
+    let option = JSON.parse(JSON.stringify(M.options.it4.option));
     let categories = M.createCategories();
-    let sae = M.lib['sae'].getSaeBySemestre(semestre);
+    let saes = M.lib['sae'].getSaeBySemestre(semestre);
+    let links = [];
+    let nodes = [];
+
+
+
+    option.series[0].categories = categories;
+    option.legend[0].data = categories.map(function (a) {
+        return a.name;
+    });
+
+    saes.forEach((sae) => {
+        let saeNode = M.createNode(sae.id, sae.code, 1);
+        nodes.push(saeNode);
+
+
+
+        sae.competences.forEach((competence) => {
+            competence = M.lib['competences'].getCompetencesById(competence);
+            let acs = M.lib['competences'].getAcsByCompetenceId(competence.id);
+
+            let competenceNode = M.createNode(competence.id, competence.name, 0);
+            nodes.push(competenceNode);
+
+
+
+
+            acs.forEach((ac) => {
+                ac = M.lib['ac'].getAcById(ac);
+                let ressources = M.lib['ressources'].getRessourcesByAcId(ac.id);
+
+                let acNode = M.createNode(ac.id, ac.code, 2);
+                nodes.push(acNode);
+
+
+                ressources.forEach((ressource) => {
+                    let ressourceNode = M.createNode(ressource.id, ressource.code + ' — ' + ressource.name, 3);
+                    nodes.push(ressourceNode);
+
+                    links.push(M.createLink(sae.id, [competence.id, ac.id, ressource.id]));
+                    links.push(M.createLink(competence.id, [ac.id, ressource.id]));
+                    links.push(M.createLink(ac.id, [ressource.id]));
+
+
+
+                })
+
+
+            })
+
+        })
+    })
+
+    option.series[0].data = M.filterNodes(nodes);
+    option.series[0].links = links.flat();
+
+    return option;
+
 }
 
 
