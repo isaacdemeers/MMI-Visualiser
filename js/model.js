@@ -14,17 +14,34 @@ M.lib = {
     sae: new Sae()
 }
 
+M.searchData = {
+    sae: [
+
+    ],
+    ressources: [
+
+    ],
+    ac: [
+
+    ],
+    competences: [
+
+    ]
+}
+
 // COLOR THEME
 M.theme = {
     dark: {
         primary: '#1B1725',
         secondary: '#2A2D43',
+        alpha: 'rgba(41, 44, 66, 0.707)',
         text: '#fff',
 
     },
     light: {
         primary: '#ebebeb',
         secondary: '#A59BC0',
+        alpha: 'rgba(165, 155, 192, 0.707)',
         text: '#222',
     }
 }
@@ -254,6 +271,71 @@ M.init = async function () {
         await M.lib[key].setup();
     }
     console.log(M.lib)
+}
+
+M.setSearchData = function () {
+    let sae = M.lib['sae'].getSae();
+    let ressources = M.lib['ressources'].getRessources();
+    let ac = M.lib['ac'].getAc();
+    let competences = M.lib['competences'].getCompetences();
+
+    for (let key in sae) {
+        let keywords = [];
+        let description = '';
+
+        keywords.push(sae[key].code);
+        keywords.push(sae[key].semestre);
+        keywords.push(sae[key].id);
+
+        description += sae[key].code + ' — ' + sae[key].name;
+        M.searchData.sae.push({ keywords, description });
+
+
+
+
+    }
+
+    for (let key in ressources) {
+        let keywords = [];
+        let description = '';
+
+        keywords.push(ressources[key].code);
+        keywords.push(ressources[key].semestre);
+        keywords.push(ressources[key].id);
+        keywords.push(ressources[key].name);
+
+
+        description += ressources[key].code + ' — ' + ressources[key].name + '\n';
+        description += ressources[key].description;
+        M.searchData.ressources.push({ keywords, description });
+
+    }
+
+    for (let key in ac) {
+        let keywords = [];
+        let description = '';
+
+        keywords.push(ac[key].code);
+        keywords.push(ac[key].id);
+
+        description += ac[key].code + ' — ' + ac[key].libelle;
+        M.searchData.ac.push({ keywords, description });
+
+    }
+
+    for (let key in competences) {
+        let keywords = [];
+        let description = '';
+
+        keywords.push(competences[key].name);
+        keywords.push(competences[key].id);
+
+        description += competences[key].name + ' — ' + competences[key].description;
+        M.searchData.competences.push({ keywords, description });
+
+    }
+
+    console.log(M.searchData)
 }
 
 

@@ -7,6 +7,8 @@ let semestre = 'S1';
 V.renderSelectIT2(M.lib['ressources'].getRessourcesBySemestre(semestre), M.lib['sae'].getSaeBySemestre(semestre));
 V.renderSelectIT3(M.lib['sae'].getSae());
 
+M.setSearchData();
+
 
 
 let option = M.renderIT1();
@@ -74,7 +76,28 @@ document.body.addEventListener('click', (e) => {
     M.currentTheme = 'dark';
 
   }
+
+  if (e.target.classList.contains('search')) {
+    document.querySelector('.searchSection').classList.toggle('hidden');
+    document.querySelector('.search').classList.toggle('active');
+    document.querySelector('#searchInput').focus();
+  }
 });
+
+searchInput.addEventListener('input', function (event) {
+  let userInput = event.target.value;
+  V.updateResults(userInput, M.searchData);
+});
+
+// si detecte un scroll
+document.querySelector('.main').addEventListener('scroll', () => {
+  document.querySelector('.searchSection').classList.add('hidden');
+  document.querySelector('.search').classList.remove('active');
+
+});
+
+
+
 
 
 

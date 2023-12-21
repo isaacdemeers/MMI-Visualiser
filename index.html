@@ -13,6 +13,12 @@
         <h2 class="navTitle">MMI DATA Visualiser</h2>
     </div>
 
+    <section class="searchSection hidden">
+        <input type="text" id="searchInput" placeholder="Rechercher un AC, une ressource, une compétence...">
+        <ul id="resultsList"></ul>
+
+    </section>
+
     <nav class="nav">
 
         <div class="navTitleBox">
@@ -22,13 +28,17 @@
 
         </div>
 
+        <div class="searchBox">
+            <img src="./assets/magnifying-glass-solid.svg" alt="search icon" class="search">
+        </div>
+
         <ul class="theme">
             <li class="iconBox">
-                <img class="icon moon" src="./assets/moon-solid.svg" alt="">
+                <img class="icon moon" src="./assets/moon-solid.svg" alt="moon icon">
 
             </li>
             <li class="iconBox">
-                <img class="icon sun hidden" src="./assets/sun-solid.svg" alt="">
+                <img class="icon sun hidden" src="./assets/sun-solid.svg" alt="sun icon">
             </li>
 
         </ul>
