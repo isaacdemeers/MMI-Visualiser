@@ -1,13 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Rubik+Maps&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Jost', sans-serif;
+    transition: all 0.3s ease-in-out;
+
 }
 
-#chart-container {
-    position: relative;
-    height: 100vh;
+:root {
+    --color-primary: #1B1725;
+    --color-secondary: #2A2D43;
+    --color-text: #fff;
 }
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-secondary);
+
+}
+
+.nav {
+    height: calc(100vh - 2rem);
+    width: 70px;
+    background-color: var(--color-primary);
+    margin: 1rem 0 1rem 1rem;
+    border-radius: 40px;
+    display: flex;
+    padding-top: 10rem;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+
+}
+
+select {
+    width: 100%;
+    height: 2rem;
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    border: none;
+    border-bottom: 1px solid var(--color-text);
+    outline: none;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+
+}
+
+.navTitleBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transform: rotate(-90deg);
+}
+
+.theme {
+    position: absolute;
+    bottom: 1.5rem;
+    cursor: pointer;
+    overflow: hidden;
+    width: 2rem;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+}
+
+.iconBox {
+    list-style: none;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.icon {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: absolute;
+}
+
+.icon.hidden {
+    transform: translateX(-100%);
+}
+
+
+.navTitle {
+    font-family: 'Rubik Maps', sans-serif;
+    color: var(--color-text);
+    text-transform: uppercase;
+    width: 300px;
+    text-align: center;
+}
+
 
 
 
@@ -17,13 +107,13 @@
     align-items: flex-start;
     flex-wrap: wrap;
 
-    background-color: white;
-    height: fit-content;
+    height: calc(100vh - 2rem);
     width: 100vw;
 
-    padding: 1rem;
-    gap: 2rem;
-    flex-direction: column-reverse;
+    gap: 1rem;
+    overflow: scroll;
+    border-radius: 40px;
+    margin: 1rem;
 
 
 }
@@ -31,30 +121,61 @@
 h1 {
     font-size: 1rem;
     font-weight: 700;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: white;
+    color: var(--color-text);
     margin-bottom: 1rem;
+    text-align: center;
 
 }
 
+
 .element {
 
-    background-color: #21272d;
+    background-color: var(--color-primary);
 
-    padding: 1rem;
+    padding: 2rem;
     border-radius: 40px;
     overflow: hidden;
 
     width: fit-content;
     width: 100%;
-    height: fit-content;
+    height: calc(100vh - 2rem);
 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
 
-    box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.48);
+    box-shadow: 0 10px 5px 0px rgba(0, 0, 0, 0.1);
+
 
 }
 
 .chart {
     width: 100%;
+    height: 100%;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 10px 5px 0px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+
+}
+
+.loader {
+    position: absolute;
     height: 100vh;
+    width: 100vw;
+    backdrop-filter: blur(30px);
+    background-color: rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 1000;
+
+    transition: all 0.8s ease-in-out;
+}
+
+.loader.hidden {
+    transform: translateY(-100%);
 }

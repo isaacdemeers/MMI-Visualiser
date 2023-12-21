@@ -1,4 +1,8 @@
+// import echart
+
 let V = {}
+
+
 
 V.createChart = function (htmlId, options) {
     let dom = document.getElementById(htmlId);
@@ -65,6 +69,20 @@ V.renderSelectIT3 = function (sae) {
     document.getElementById('saeit3').innerHTML = html;
 
 
+}
+
+V.setTheme = function (theme, colorScheme) {
+
+    const root = document.documentElement;
+    root.style.setProperty('--color-primary', colorScheme[theme].primary);
+    root.style.setProperty('--color-secondary', colorScheme[theme].secondary);
+    root.style.setProperty('--color-text', colorScheme[theme].text);
+
+
+}
+
+V.hideLoader = function () {
+    document.querySelector('.loader').classList.add('hidden');
 }
 
 export { V }

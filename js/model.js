@@ -12,17 +12,42 @@ M.lib = {
     sae: new Sae()
 }
 
+
+M.theme = {
+    dark: {
+        primary: '#1B1725',
+        secondary: '#2A2D43',
+        text: '#fff',
+
+    },
+    light: {
+        primary: '#ebebeb',
+        secondary: '#A59BC0',
+        text: '#222',
+    }
+}
+
+M.currentTheme = 'dark';
+
+
+
 M.options = {
     it1: {
 
         option: {
+
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
                     type: 'shadow'
                 }
             },
-            legend: {},
+            legend: {
+                textStyle: {
+                    color: 'source',
+
+                }
+            },
             grid: {
                 left: '3%',
                 right: '4%',
@@ -34,7 +59,10 @@ M.options = {
             },
             yAxis: {
                 type: 'category',
-                data: []
+                data: [
+
+                ],
+
             },
             series: [
 
@@ -48,7 +76,8 @@ M.options = {
                 type: 'bar',
                 stack: 'total',
                 label: {
-                    show: true
+                    show: true,
+                    textBorderWidth: 0,
                 },
                 emphasis: {
                     focus: 'series'
@@ -63,6 +92,19 @@ M.options = {
 
     it2: {
         option: {
+            tooltip: {
+                trigger: 'item',
+                formatter: '{b0}',
+                confine: true,
+
+                formatter: function (params) {
+                    // params contient des informations sur les données survolées
+                    // Vous pouvez utiliser params.name, params.value, params.data, etc.
+                    return 'Nom: ' + params.libelle + '<br />'
+                }
+
+
+            },
             series: {
                 type: 'sunburst',
 
@@ -70,6 +112,7 @@ M.options = {
                 data: [],
                 radius: [0, '90%'],
                 label: {
+                    textBorderWidth: 0,
                     rotate: 'radial'
                 }
             }
@@ -77,17 +120,22 @@ M.options = {
 
         template: {
             name: '',
-            children: []
+            children: [],
         },
 
         child: {
             name: '',
-            value: 10
+            value: 10,
+
         }
     },
 
     it3: {
         option: {
+            darkMode: 'false',
+            textStyle: {
+                fontWeight: 'bolder',
+            },
             tooltip: {
                 trigger: 'item',
                 triggerOn: 'mousemove'
@@ -105,13 +153,14 @@ M.options = {
                         position: 'left',
                         verticalAlign: 'middle',
                         align: 'right',
-                        fontSize: 9
+                        fontSize: 9,
                     },
                     leaves: {
                         label: {
                             position: 'right',
                             verticalAlign: 'middle',
-                            align: 'left'
+                            align: 'left',
+
                         }
                     },
                     emphasis: {
@@ -134,11 +183,27 @@ M.options = {
     it4: {
         option: {
 
+
+
+
+            tooltip: {
+                trigger: 'item',
+                formatter: '{b0}',
+
+
+            },
+
             legend: [
                 {
                     data: [],
-                }
+                    textStyle: {
+                        color: 'source',
+
+                    }
+                },
+
             ],
+
             animationDurationUpdate: 1500,
             animationEasingUpdate: 'quinticInOut',
             series: [
@@ -274,6 +339,7 @@ M.renderIT21 = function (semestre) {
         option.series.data.push(template);
 
     }
+    console.log(option)
 
     return option;
 

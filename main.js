@@ -1,4 +1,3 @@
-
 import { M } from './js/model.js';
 import { V } from './js/view.js';
 
@@ -25,6 +24,7 @@ let it3 = V.createChart('it3', option);
 option = M.renderIT4('S1');
 let it4 = V.createChart('it4', option);
 
+V.hideLoader();
 
 
 document.body.addEventListener('change', (e) => {
@@ -59,5 +59,23 @@ document.body.addEventListener('change', (e) => {
 
   }
 })
+
+document.body.addEventListener('click', (e) => {
+  if (e.target.classList.contains('moon')) {
+    e.target.classList.add('hidden');
+    document.querySelector('.sun').classList.remove('hidden');
+    V.setTheme('light', M.theme);
+    M.currentTheme = 'light';
+  }
+  if (e.target.classList.contains('sun')) {
+    e.target.classList.add('hidden');
+    document.querySelector('.moon').classList.remove('hidden');
+    V.setTheme('dark', M.theme);
+    M.currentTheme = 'dark';
+
+  }
+});
+
+
 
 
