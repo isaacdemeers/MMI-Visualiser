@@ -5,6 +5,8 @@ import { Sae } from './class/Sae.js';
 
 let M = {}
 
+// J'ai vraiment essayé de rajouter les nom des AC dans les popUp mais pour ma part, impossible de les faire fonctionner.
+
 M.lib = {
     competences: new Competences(),
     ac: new Ac(),
@@ -12,7 +14,7 @@ M.lib = {
     sae: new Sae()
 }
 
-
+// COLOR THEME
 M.theme = {
     dark: {
         primary: '#1B1725',
@@ -30,7 +32,7 @@ M.theme = {
 M.currentTheme = 'dark';
 
 
-
+// OPTIONS TEMPLATES
 M.options = {
     it1: {
 
@@ -92,23 +94,10 @@ M.options = {
 
     it2: {
         option: {
-            tooltip: {
-                trigger: 'item',
-                formatter: '{b0}',
-                confine: true,
-
-                formatter: function (params) {
-                    // params contient des informations sur les données survolées
-                    // Vous pouvez utiliser params.name, params.value, params.data, etc.
-                    return 'Nom: ' + params.libelle + '<br />'
-                }
 
 
-            },
             series: {
                 type: 'sunburst',
-
-
                 data: [],
                 radius: [0, '90%'],
                 label: {
@@ -126,7 +115,6 @@ M.options = {
         child: {
             name: '',
             value: 10,
-
         }
     },
 
@@ -269,6 +257,7 @@ M.init = async function () {
 }
 
 
+// IT1 RENDERING FUNCTIONS ———
 M.renderIT1 = function () {
     let option = M.options.it1.option;
     let sae = M.lib['sae'].getSae();
@@ -306,6 +295,8 @@ M.renderIT1 = function () {
     return option;
 }
 
+
+// IT2.1 RENDERING FUNCTION ———
 M.renderIT21 = function (semestre) {
     let option = JSON.parse(JSON.stringify(M.options.it2.option));
     let ressources = M.lib['ressources'].getRessourcesBySemestre(semestre);
@@ -345,6 +336,8 @@ M.renderIT21 = function (semestre) {
 
 }
 
+
+// IT2.2 RENDERING FUNCTION ———
 M.renderIT22 = function (id) {
 
     let option = JSON.parse(JSON.stringify(M.options.it2.option));
@@ -385,7 +378,7 @@ M.renderIT22 = function (id) {
 
 }
 
-
+// IT3 RENDERING FUNCTION ———
 M.renderIT3 = function (saeId) {
     let option = JSON.parse(JSON.stringify(M.options.it3.option));
     let sae = M.lib['sae'].getSaeById(saeId);
@@ -429,9 +422,8 @@ M.renderIT3 = function (saeId) {
 
 }
 
-// Visualiser de manière globale et par semestre, l’ensemble des “liens” ou “dépendances” qui relient
-// compétences, apprentissages critiques, ressources et SAE
 
+// IT4 RENDERING FUNCTIONS ———
 M.createCategories = function () {
     let data = {
         competences: {
@@ -456,6 +448,7 @@ M.createCategories = function () {
     return categories;
 }
 
+// CREATE A LINK BETWEEN TWO NODES
 M.createLink = function (source, targets) {
     let links = [];
     targets.forEach((target) => {
@@ -467,6 +460,7 @@ M.createLink = function (source, targets) {
     return links;
 }
 
+// CREATE A NODE
 M.createNode = function (id, name, category) {
 
     let node = JSON.parse(JSON.stringify(M.options.it4.nodes));
@@ -477,6 +471,8 @@ M.createNode = function (id, name, category) {
     return node;
 }
 
+
+// REMOVE DUPLICATED NODES
 M.filterNodes = function (nodes) {
     let rep = [];
     nodes.forEach((node) => {
@@ -487,6 +483,7 @@ M.filterNodes = function (nodes) {
     return rep;
 }
 
+// IT4 RENDERING FUNCTION ———
 M.renderIT4 = function (semestre) {
     let option = JSON.parse(JSON.stringify(M.options.it4.option));
     let categories = M.createCategories();
@@ -532,14 +529,8 @@ M.renderIT4 = function (semestre) {
                     links.push(M.createLink(sae.id, [competence.id, ac.id, ressource.id]));
                     links.push(M.createLink(competence.id, [ac.id, ressource.id]));
                     links.push(M.createLink(ac.id, [ressource.id]));
-
-
-
                 })
-
-
             })
-
         })
     })
 
@@ -549,11 +540,6 @@ M.renderIT4 = function (semestre) {
     return option;
 
 }
-
-
-
-
-
 
 export { M }
 

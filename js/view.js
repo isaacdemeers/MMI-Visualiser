@@ -1,4 +1,3 @@
-// import echart
 
 let V = {}
 
@@ -7,30 +6,12 @@ let V = {}
 V.createChart = function (htmlId, options) {
     let dom = document.getElementById(htmlId);
     let chart = echarts.init(dom);
-
-
     chart.setOption(options);
-
     window.addEventListener('resize', chart.resize);
 
     return chart;
-
 }
 
-V.renderSelectIT2 = function (options) {
-    let select = document.createElement('select');
-    select.id = 'semestreit2';
-    select.classList.add('form-control');
-    for (let key in options) {
-        let option = document.createElement('option');
-        option.value = options[key];
-        option.innerHTML = options[key];
-
-
-        select.appendChild(option);
-    }
-    return select;
-}
 
 V.renderSelectIT2 = function (ressources, sae) {
 
@@ -42,11 +23,7 @@ V.renderSelectIT2 = function (ressources, sae) {
         option.innerHTML = ressources[key].code + ' - ' + ressources[key].name;
         html += option.outerHTML;
     }
-
     html += `<option disabled>SAE  ——————</option>`;
-
-
-
     for (let key in sae) {
         let option = document.createElement('option');
         option.value = sae[key].id;
@@ -67,18 +44,13 @@ V.renderSelectIT3 = function (sae) {
     }
 
     document.getElementById('saeit3').innerHTML = html;
-
-
 }
 
 V.setTheme = function (theme, colorScheme) {
-
     const root = document.documentElement;
     root.style.setProperty('--color-primary', colorScheme[theme].primary);
     root.style.setProperty('--color-secondary', colorScheme[theme].secondary);
     root.style.setProperty('--color-text', colorScheme[theme].text);
-
-
 }
 
 V.hideLoader = function () {
