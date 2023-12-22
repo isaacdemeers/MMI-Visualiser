@@ -77,6 +77,15 @@ document.body.addEventListener('click', (e) => {
 
   }
 
+  //  h1
+  if (e.target.nodeName == 'CANVAS' || e.target.classList.contains('element') || e.target.classList.contains('chart')) {
+    document.querySelector('.search').classList.remove('active');
+    document.querySelector('.searchSection').classList.add('hidden');
+
+
+  }
+  console.log(e.target)
+
   if (e.target.classList.contains('search')) {
     document.querySelector('.searchSection').classList.toggle('hidden');
     document.querySelector('.search').classList.toggle('active');

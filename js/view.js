@@ -94,7 +94,7 @@ V.updateResults = function (inputValue, data) {
 
     if (resultsList.innerHTML == '') {
         let listItem = document.createElement('li');
-        listItem.classList.add('searchResult');
+        listItem.classList.add('searchResult', 'noResult');
         listItem.textContent = 'Aucun résultat';
         resultsList.appendChild(listItem);
     }

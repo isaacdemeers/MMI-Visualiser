@@ -39,7 +39,7 @@ M.theme = {
 
     },
     light: {
-        primary: '#ebebeb',
+        primary: '#efeafd',
         secondary: '#A59BC0',
         alpha: 'rgba(165, 155, 192, 0.707)',
         text: '#222',

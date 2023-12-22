@@ -166,9 +166,15 @@ select {
 
     color: var(--color-text);
     width: 100%;
-    padding: .5rem;
+    padding: .8rem;
     border-radius: 10px;
     border-bottom: 1px solid var(--color-primary);
+    cursor: default;
+}
+
+.noResult {
+    border-bottom: none;
+    text-align: center;
 }
 
 
@@ -199,6 +205,7 @@ select {
     outline: none;
     font-size: 1rem;
     font-weight: 500;
+    margin-top: .5rem;
 
 }
 
